@@ -1,18 +1,18 @@
 {
-  "name": "image-size",
+  "name": "image-size-png",
   "version": "1.1.1",
-  "description": "get dimensions of any image file",
+  "description": "get dimensions of png image file",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "bin/image-size.js"
+    "bin/image-size-png.js"
   ],
   "engines": {
     "node": ">=16.x"
   },
   "packageManager": "yarn@4.0.2",
-  "bin": "bin/image-size.js",
+  "bin": "bin/image-size-png.js",
   "scripts": {
     "lint": "eslint --ext .ts,.js bin lib specs",
     "format": "prettier --write lib specs",
@@ -29,24 +29,10 @@
     "resolution",
     "width",
     "height",
-    "avif",
-    "bmp",
-    "cur",
-    "gif",
-    "heic",
-    "heif",
-    "icns",
-    "ico",
-    "jpeg",
-    "png",
-    "psd",
-    "svg",
-    "tga",
-    "tiff",
-    "webp"
+    "png"
   ],
-  "repository": "git://github.com/image-size/image-size.git",
-  "author": "netroy <aditya@netroy.in> (http://netroy.in/)",
+  "repository": "git://github.com/sahithyandev/image-size-png.git",
+  "author": "Sahithyan <sahithyan2701@gmail.com> (https://sahithyan.dev/)",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "4.3.11",
