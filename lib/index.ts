@@ -33,16 +33,19 @@ function lookup(input: Uint8Array, filepath?: string): ISizeCalculationResult {
   // detect the file type.. don't rely on the extension
   const type = detector(input)
 
-  if (typeof type !== 'undefined' && type in typeHandlers) {
-    const size = typeHandlers[type].calculate(input, filepath)
-    if (size !== undefined) {
-      size.type = size.type ?? type
-      return size
-    }
+  if (type !== 'png') {
+    throw new TypeError('unsupported file: ' + filepath)
   }
 
-  // throw up, if we don't understand the file
-  throw new TypeError('unsupported file: ' + filepath)
+  const size = typeHandlers.png.calculate(input, filepath)
+  if (size === undefined) {
+    throw new TypeError('unsupported file: ' + filepath)
+  }
+
+  if (!size.type) {
+    size.type = type;
+  }
+  return size
 }
 
 /**

@@ -9,17 +9,17 @@ const pngFriedChunkName = 'CgBI'
 
 export const PNG: IImage = {
   validate(input) {
-    if (pngSignature === toUTF8String(input, 1, 8)) {
-      let chunkName = toUTF8String(input, 12, 16)
-      if (chunkName === pngFriedChunkName) {
-        chunkName = toUTF8String(input, 28, 32)
-      }
-      if (chunkName !== pngImageHeaderChunkName) {
-        throw new TypeError('Invalid PNG')
-      }
-      return true
+    if (pngSignature !== toUTF8String(input, 1, 8)) {
+      return false
     }
-    return false
+    let chunkName = toUTF8String(input, 12, 16)
+    if (chunkName === pngFriedChunkName) {
+      chunkName = toUTF8String(input, 28, 32)
+    }
+    if (chunkName !== pngImageHeaderChunkName) {
+      throw new TypeError('Invalid PNG')
+    }
+    return true
   },
 
   calculate(input) {
