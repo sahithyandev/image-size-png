@@ -10,7 +10,7 @@ describe('after done reading from files', () => {
   describe('should close the file descriptor', () => {
     it('async', (done) => {
       const spy = sinon.spy(fs.promises, 'open')
-      imageSize('specs/images/valid/jpg/large.jpg', async (err) => {
+      imageSize('specs/images/valid/png/sample.png', async (err) => {
         try {
           expect(err).to.be.null
           expect(spy.calledOnce).to.be.true
@@ -28,7 +28,7 @@ describe('after done reading from files', () => {
 
     it('sync', () => {
       const spy = sinon.spy(fs, 'openSync')
-      imageSize('specs/images/valid/jpg/large.jpg')
+      imageSize('specs/images/valid/png/sample.png')
       expect(() => readFromClosed(spy.returnValues[0])).to.throw(
         Error,
         'bad file descriptor'
@@ -55,7 +55,7 @@ describe('when Uint8Array allocation fails', () => {
   describe('should close the file descriptor', () => {
     it('async', (done) => {
       const spy = sinon.spy(fs.promises, 'open')
-      imageSize('specs/images/valid/jpg/large.jpg', async (err) => {
+      imageSize('specs/images/valid/png/sample.png', async (err) => {
         try {
           expect(err).to.be.instanceOf(RangeError)
           expect(spy.calledOnce).to.be.true
@@ -73,7 +73,7 @@ describe('when Uint8Array allocation fails', () => {
 
     it('sync', () => {
       const spy = sinon.spy(fs, 'openSync')
-      expect(() => imageSize('specs/images/valid/jpg/large.jpg')).to.throw(
+      expect(() => imageSize('specs/images/valid/png/sample.png')).to.throw(
         RangeError
       )
       expect(() => readFromClosed(spy.returnValues[0])).to.throw(

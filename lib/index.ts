@@ -1,7 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import Queue from 'queue'
-import type { imageType } from './types/index'
 import { typeHandlers } from './types/index'
 import { detector } from './detector'
 import type { ISizeCalculationResult } from './types/interface'
@@ -44,7 +43,7 @@ function lookup(input: Uint8Array, filepath?: string): ISizeCalculationResult {
 
   // throw up, if we don't understand the file
   throw new TypeError(
-    'unsupported file type: ' + type + ' (file: ' + filepath + ')'
+    'unsupported file: ' + filepath
   )
 }
 
