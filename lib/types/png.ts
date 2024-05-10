@@ -1,11 +1,11 @@
-import type { IImage } from './interface'
-import { toUTF8String, readUInt32BE } from './utils'
+import type { IImage } from "./interface"
+import { toUTF8String, readUInt32BE } from "./utils"
 
-const pngSignature = 'PNG\r\n\x1a\n'
-const pngImageHeaderChunkName = 'IHDR'
+const pngSignature = "PNG\r\n\x1a\n"
+const pngImageHeaderChunkName = "IHDR"
 
 // Used to detect "fried" png's: http://www.jongware.com/pngdefry.html
-const pngFriedChunkName = 'CgBI'
+const pngFriedChunkName = "CgBI"
 
 export const PNG: IImage = {
   validate(input) {
@@ -15,7 +15,7 @@ export const PNG: IImage = {
         chunkName = toUTF8String(input, 28, 32)
       }
       if (chunkName !== pngImageHeaderChunkName) {
-        throw new TypeError('Invalid PNG')
+        throw new TypeError("Invalid PNG")
       }
       return true
     }

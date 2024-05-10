@@ -2,13 +2,13 @@ const decoder = new TextDecoder()
 export const toUTF8String = (
   input: Uint8Array,
   start = 0,
-  end = input.length
+  end = input.length,
 ) => decoder.decode(input.slice(start, end))
 
 export const toHexString = (input: Uint8Array, start = 0, end = input.length) =>
   input
     .slice(start, end)
-    .reduce((memo, i) => memo + ('0' + i.toString(16)).slice(-2), '')
+    .reduce((memo, i) => memo + ("0" + i.toString(16)).slice(-2), "")
 
 export const readInt16LE = (input: Uint8Array, offset = 0) => {
   const val = input[offset] + input[offset + 1] * 2 ** 8
@@ -55,11 +55,11 @@ export function readUInt(
   input: Uint8Array,
   bits: 16 | 32,
   offset: number,
-  isBigEndian: boolean
+  isBigEndian: boolean,
 ): number {
   offset = offset || 0
-  const endian = isBigEndian ? 'BE' : 'LE'
-  const methodName: MethodName = ('readUInt' + bits + endian) as MethodName
+  const endian = isBigEndian ? "BE" : "LE"
+  const methodName: MethodName = ("readUInt" + bits + endian) as MethodName
   return methods[methodName](input, offset)
 }
 

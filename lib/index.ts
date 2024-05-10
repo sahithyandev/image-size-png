@@ -1,9 +1,9 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import Queue from 'queue'
-import { typeHandlers } from './types/index'
-import { detector } from './detector'
-import type { ISizeCalculationResult } from './types/interface'
+import * as fs from "fs"
+import * as path from "path"
+import Queue from "queue"
+import { typeHandlers } from "./types/index"
+import { detector } from "./detector"
+import type { ISizeCalculationResult } from "./types/interface"
 
 type CallbackFn = (e: Error | null, r?: ISizeCalculationResult) => void
 
@@ -33,7 +33,7 @@ function lookup(input: Uint8Array, filepath?: string): ISizeCalculationResult {
   // detect the file type.. don't rely on the extension
   const type = detector(input)
 
-  if (typeof type !== 'undefined' && type in typeHandlers) {
+  if (typeof type !== "undefined" && type in typeHandlers) {
     const size = typeHandlers[type].calculate(input, filepath)
     if (size !== undefined) {
       size.type = size.type ?? type
@@ -42,9 +42,7 @@ function lookup(input: Uint8Array, filepath?: string): ISizeCalculationResult {
   }
 
   // throw up, if we don't understand the file
-  throw new TypeError(
-    'unsupported file: ' + filepath
-  )
+  throw new TypeError("unsupported file: " + filepath)
 }
 
 /**
@@ -53,11 +51,11 @@ function lookup(input: Uint8Array, filepath?: string): ISizeCalculationResult {
  * @returns {Promise<Uint8Array>}
  */
 async function readFileAsync(filepath: string): Promise<Uint8Array> {
-  const handle = await fs.promises.open(filepath, 'r')
+  const handle = await fs.promises.open(filepath, "r")
   try {
     const { size } = await handle.stat()
     if (size <= 0) {
-      throw new Error('Empty file')
+      throw new Error("Empty file")
     }
     const inputSize = Math.min(size, MaxInputSize)
     const input = new Uint8Array(inputSize)
@@ -76,11 +74,11 @@ async function readFileAsync(filepath: string): Promise<Uint8Array> {
  */
 function readFileSync(filepath: string): Uint8Array {
   // read from the file, synchronously
-  const descriptor = fs.openSync(filepath, 'r')
+  const descriptor = fs.openSync(filepath, "r")
   try {
     const { size } = fs.fstatSync(descriptor)
     if (size <= 0) {
-      throw new Error('Empty file')
+      throw new Error("Empty file")
     }
     const inputSize = Math.min(size, MaxInputSize)
     const input = new Uint8Array(inputSize)
@@ -104,7 +102,7 @@ export function imageSize(input: string, callback: CallbackFn): void
  */
 export function imageSize(
   input: Uint8Array | string,
-  callback?: CallbackFn
+  callback?: CallbackFn,
 ): ISizeCalculationResult | void {
   // Handle Uint8Array input
   if (input instanceof Uint8Array) {
@@ -112,19 +110,19 @@ export function imageSize(
   }
 
   // input should be a string at this point
-  if (typeof input !== 'string' || globalOptions.disabledFS) {
-    throw new TypeError('invalid invocation. input should be a Uint8Array')
+  if (typeof input !== "string" || globalOptions.disabledFS) {
+    throw new TypeError("invalid invocation. input should be a Uint8Array")
   }
 
   // resolve the file path
   const filepath = path.resolve(input)
-  if (typeof callback === 'function') {
+  if (typeof callback === "function") {
     queue.push(() =>
       readFileAsync(filepath)
         .then((input) =>
-          process.nextTick(callback, null, lookup(input, filepath))
+          process.nextTick(callback, null, lookup(input, filepath)),
         )
-        .catch(callback)
+        .catch(callback),
     )
   } else {
     const input = readFileSync(filepath)
