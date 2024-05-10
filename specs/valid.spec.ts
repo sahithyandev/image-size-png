@@ -17,6 +17,18 @@ const sizes: { [key: string]: ISizeCalculationResult } = {
     width: 128,
     height: 68,
   },
+  'specs/images/valid/png/sample-big-1.png': {
+    width: 1847,
+    height: 595,
+  },
+  'specs/images/valid/png/sample-big-2.png': {
+    width: 1505,
+    height: 470,
+  },
+  'specs/images/valid/png/sample-big-3.png': {
+    width: 1812,
+    height: 585,
+  },
 }
 
 // Test all valid files
