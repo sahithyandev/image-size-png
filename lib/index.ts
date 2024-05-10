@@ -17,12 +17,10 @@ const queue = new Queue({ concurrency: 100, autostart: true })
 
 type Options = {
   disabledFS: boolean
-  disabledTypes: imageType[]
 }
 
 const globalOptions: Options = {
   disabledFS: false,
-  disabledTypes: [],
 }
 
 /**
@@ -36,18 +34,11 @@ function lookup(input: Uint8Array, filepath?: string): ISizeCalculationResult {
   // detect the file type.. don't rely on the extension
   const type = detector(input)
 
-  if (typeof type !== 'undefined') {
-    if (globalOptions.disabledTypes.indexOf(type) > -1) {
-      throw new TypeError('disabled file type: ' + type)
-    }
-
-    // find an appropriate handler for this file type
-    if (type in typeHandlers) {
-      const size = typeHandlers[type].calculate(input, filepath)
-      if (size !== undefined) {
-        size.type = size.type ?? type
-        return size
-      }
+  if (typeof type !== 'undefined' && type in typeHandlers) {
+    const size = typeHandlers[type].calculate(input, filepath)
+    if (size !== undefined) {
+      size.type = size.type ?? type
+      return size
     }
   }
 
@@ -144,9 +135,6 @@ export function imageSize(
 
 export const disableFS = (v: boolean): void => {
   globalOptions.disabledFS = v
-}
-export const disableTypes = (types: imageType[]): void => {
-  globalOptions.disabledTypes = types
 }
 export const setConcurrency = (c: number): void => {
   queue.concurrency = c
