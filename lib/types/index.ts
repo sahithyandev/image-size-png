@@ -1,4 +1,4 @@
-import { PNG } from "./png"
+import { PNG } from './png'
 
 export const typeHandlers = {
   png: PNG,

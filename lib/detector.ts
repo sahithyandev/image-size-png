@@ -1,11 +1,11 @@
-import type { imageType } from "./types/index"
-import { typeHandlers } from "./types/index"
+import type { imageType } from './types/index'
+import { typeHandlers } from './types/index'
 
 const keys = Object.keys(typeHandlers) as imageType[]
 
 // This map helps avoid validating for every single image type
 const firstBytes: { [byte: number]: imageType } = {
-  0x89: "png",
+  0x89: 'png',
 }
 
 export function detector(input: Uint8Array): imageType | undefined {
